@@ -244,36 +244,26 @@ if (menuToggle && navLinks) {
 // ------------------------------------------
 
 const revealElements = document.querySelectorAll(".reveal");
+const showAllReveals = () => revealElements.forEach((el) => el.classList.add("visible"));
 
-
-const revealObserver = new IntersectionObserver(
-
-    (entries) => {
-
-        entries.forEach((entry) => {
-
-            if (entry.isIntersecting) {
-
-                entry.target.classList.add("visible");
-
-            }
-
-        });
-
-    },
-
-    {
-        threshold: 0.12
-    }
-
-);
-
-
-revealElements.forEach((element) => {
-
-    revealObserver.observe(element);
-
-});
+if ("IntersectionObserver" in window) {
+    const revealObserver = new IntersectionObserver(
+        (entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("visible");
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        },
+        { threshold: 0, rootMargin: "0px 0px -5% 0px" }
+    );
+    revealElements.forEach((element) => revealObserver.observe(element));
+    // Safety net: never leave content hidden
+    setTimeout(showAllReveals, 2500);
+} else {
+    showAllReveals();
+}
 
 
 // ------------------------------------------
@@ -351,10 +341,9 @@ interactiveCards.forEach((card) => {
 // ------------------------------------------
 
 const terminalLines = [
-    "Full-Stack Developer",
-    "AI/ML Engineer",
-    "Analytics Engineer",
-    "Cybersecurity Enthusiast"
+    "Python | MERN | AI/ML",
+    "Web apps with the MERN stack",
+    "ML pipelines in Python"
 ];
 
 
@@ -524,7 +513,7 @@ window.addEventListener("load", function () {
     );
 
     console.log(
-        "%c Full-Stack & AI Developer ",
+        "%c Software Developer | Python, MERN, AI/ML ",
         "color:#c59cff;"
     );
 
