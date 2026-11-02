@@ -48,3 +48,13 @@ footer{display:flex;justify-content:space-between;padding:22px 6vw;border-top:1p
 .contact-modal>.hud-left{grid-column:1;left:auto;bottom:auto}
 .contact-modal>.hud-right{grid-column:2;right:auto;bottom:auto;text-align:right}
 .contact-modal>.contact-layout{grid-row:2}.contact-modal>.modal-header{grid-row:1}
+
+/* FREELANCE SECTION */
+.freelance-lead{color:#b7bac8;font-size:15px;line-height:1.8;max-width:640px;margin:-25px 0 30px}
+.freelance-grid{grid-template-columns:repeat(3,1fr)}
+.freelance-grid .cert-card h3{font-size:19px;line-height:1.3;margin:20px 0 6px}
+.freelance-grid .cert-card small{display:block;margin-top:12px;line-height:1.7;font-size:10px}
+.freelance-cta{margin-top:36px;text-align:center}
+.freelance-cta .btn{display:inline-block;text-decoration:none}
+@media(max-width:900px){.freelance-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:680px){.freelance-grid{grid-template-columns:1fr}.freelance-lead{margin-top:-15px}}
