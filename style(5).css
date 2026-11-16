@@ -61,9 +61,6 @@ footer{display:flex;justify-content:space-between;padding:22px 6vw;border-top:1p
 
 /* FREELANCE SECTION - 3-platform redesign (Nov 16) */
 .neon-title{position:relative;display:inline-block}
-.neon-line{position:absolute;left:0;height:2px;border-radius:2px;background:linear-gradient(90deg,var(--purple),var(--cyan));box-shadow:0 0 12px var(--purple),0 0 22px rgba(66,232,255,.5);animation:neonFlicker 3.4s infinite}
-.neon-line-a{width:100%;bottom:-14px}
-.neon-line-b{width:calc(100% - 38px);bottom:-26px;animation-delay:1.2s}
 .nav-freelance{color:var(--cyan)!important;text-shadow:0 0 8px rgba(66,232,255,.75),0 0 18px rgba(155,92,255,.6);animation:neonFlicker 4.2s infinite}
 @keyframes neonFlicker{0%,100%{opacity:1}3%{opacity:.45}5%{opacity:1}46%{opacity:1}48%{opacity:.6}50%{opacity:1}73%{opacity:.8}75%{opacity:1}}
 .platform-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
@@ -83,7 +80,7 @@ footer{display:flex;justify-content:space-between;padding:22px 6vw;border-top:1p
 @keyframes hireDepth{0%,100%{transform:perspective(400px) translateZ(0);box-shadow:0 0 32px rgba(155,92,255,.4),0 16px 34px rgba(0,0,0,.5)}50%{transform:perspective(400px) translateZ(-28px) scale(.965);box-shadow:0 0 8px rgba(155,92,255,.14),0 2px 6px rgba(0,0,0,.55)}}
 @media(max-width:900px){.platform-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:680px){.platform-grid{grid-template-columns:1fr}}
-@media(prefers-reduced-motion:reduce){.neon-line,.nav-freelance,.hire-depth{animation:none}}
+@media(prefers-reduced-motion:reduce){.nav-freelance,.hire-depth{animation:none}}
 
 /* HIRE ME static + linked platform logos (her pick, Nov 16) */
 .hire-static{cursor:default}
