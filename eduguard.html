@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>EduGuard AI - Exam Proctoring | Priyanshu Kumari Paswan</title>
+
+  <meta
+    name="description"
+    content="EduGuard AI: an ML-powered exam proctoring prototype with a live in-browser demo. Gaze, audio and tab-switch signals combine into a live risk score. Built by Priyanshu Kumari Paswan."
+  />
+
+  <meta name="robots" content="index, follow" />
+
+  <meta property="og:title" content="EduGuard AI - Exam Proctoring | Priyanshu Kumari Paswan" />
+  <meta property="og:description" content="ML proctoring prototype with a live in-browser demo: gaze, audio and tab-switch signals combined into a risk score." />
+  <meta property="og:type" content="website" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%2305070d'/%3E%3Ctext x='32' y='43' font-family='monospace' font-size='30' font-weight='700' text-anchor='middle' fill='%2342e8ff'%3EPK%3C/text%3E%3C/svg%3E" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800&family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="style(5).css" />
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GPRWLTDX1R"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-GPRWLTDX1R');
+</script>
+  <style>
+    body{background:var(--bg)}
+    .detail-nav{display:flex;justify-content:space-between;align-items:center;gap:16px}
+    .back-link{font:700 10px var(--mono);letter-spacing:1.5px;color:var(--cyan);text-decoration:none;transition:.25s;white-space:nowrap}
+    .back-link:hover{color:#fff;text-shadow:0 0 12px rgba(66,232,255,.6)}
+    .detail-main{max-width:1100px;margin:0 auto;padding:140px 24px 80px}
+    .detail-head{margin-bottom:36px}
+    .detail-head .card-tag{font:10px var(--mono);color:var(--cyan);letter-spacing:1.5px;margin:0 0 14px}
+    .detail-head h1{font:700 clamp(26px,4vw,44px)/1.15 var(--display);margin:0 0 18px;color:var(--text)}
+    .detail-head .lede{color:var(--muted);line-height:1.8;font-size:15px;max-width:760px;margin:0 0 22px}
+    .detail-section{margin:46px 0}
+    .detail-section h2{font:700 clamp(18px,2.4vw,26px)/1.2 var(--display);color:var(--text);margin:0 0 20px}
+    .detail-section h2 span{color:var(--purple2)}
+    .detail-section p{color:#aeb2c2;line-height:1.8;font-size:14px;max-width:820px}
+    .detail-section p b{color:#e5e2ef}
+    .feature-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:15px;margin-top:8px}
+    .feature-card{background:linear-gradient(145deg,rgba(15,19,32,.88),rgba(8,11,20,.76));border:1px solid rgba(155,92,255,.18);padding:24px;position:relative}
+    .feature-card:after{content:"";position:absolute;right:0;top:0;width:34px;height:34px;border-top:1px solid var(--cyan);border-right:1px solid var(--cyan);opacity:.6}
+    .feature-card h3{font:700 13px var(--display);letter-spacing:1px;margin:0 0 12px;color:#e5e2ef}
+    .feature-card p{color:#aeb2c2;line-height:1.7;font-size:13px;margin:0;max-width:none}
+    .detail-actions{display:flex;gap:12px;flex-wrap:wrap;margin:40px 0 10px}
+    .detail-actions .btn{text-decoration:none;display:inline-block}
+
+    /* ---------- live demo ---------- */
+    .demo-shell{border:1px solid rgba(155,92,255,.3);background:#070a13;position:relative;margin-top:8px}
+    .demo-shell:after{content:"";position:absolute;right:0;top:0;width:34px;height:34px;border-top:1px solid var(--cyan);border-right:1px solid var(--cyan);opacity:.6;pointer-events:none}
+    .demo-consent{padding:22px 24px;border-bottom:1px solid rgba(155,92,255,.18)}
+    .demo-consent p{color:#aeb2c2;line-height:1.7;font-size:13px;margin:0 0 8px;max-width:none}
+    .demo-consent p b{color:#e5e2ef}
+    .demo-controls{display:flex;gap:12px;flex-wrap:wrap;align-items:center;padding:18px 24px;border-bottom:1px solid rgba(155,92,255,.18)}
+    .demo-controls .btn{display:inline-block}
+    #demoStatus{font:10px var(--mono);color:#8f96ab;letter-spacing:1px}
+    .demo-body{display:none;grid-template-columns:1.1fr .9fr;gap:0}
+    .demo-body.running{display:grid}
+    .demo-video-wrap{position:relative;background:#000;border-right:1px solid rgba(155,92,255,.18);min-height:280px}
+    #demoVideo{display:block;width:100%;height:100%;object-fit:cover;transform:scaleX(-1)}
+    .demo-face-tag{position:absolute;left:12px;top:12px;font:700 10px var(--mono);letter-spacing:1.5px;padding:6px 10px;background:rgba(5,7,13,.8);border:1px solid rgba(66,232,255,.4);color:var(--cyan)}
+    .demo-panel{padding:22px 24px}
+    .risk-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px}
+    #riskLabel{font:800 20px var(--display);letter-spacing:1px;color:var(--cyan)}
+    #riskPct{font:700 12px var(--mono);color:#8f96ab}
+    .risk-bar{height:10px;border:1px solid rgba(155,92,255,.3);background:rgba(155,92,255,.05);margin-bottom:18px;overflow:hidden}
+    #riskFill{height:100%;width:0%;background:linear-gradient(90deg,var(--cyan),var(--purple));transition:width .3s ease}
+    .metric-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px}
+    .metric{border:1px solid rgba(155,92,255,.18);padding:12px 14px;background:rgba(155,92,255,.03)}
+    .metric small{display:block;font:10px var(--mono);color:#8f96ab;letter-spacing:1.5px;margin-bottom:6px}
+    .metric b{font:700 16px var(--display);color:#e5e2ef}
+    #evidenceLog{border-top:1px solid rgba(155,92,255,.18);padding-top:14px;max-height:150px;overflow-y:auto}
+    #evidenceLog p{font:11px var(--mono);color:#aeb2c2;margin:0 0 6px;line-height:1.5;max-width:none}
+    #evidenceLog p.hi{color:#ff7b7b}
+    #evidenceLog p.warn{color:#ffd479}
+    #evidenceLog p.info{color:#8f96ab}
+    .demo-error{display:none;padding:18px 24px;border-top:1px solid rgba(155,92,255,.18)}
+    .demo-error.show{display:block}
+    .demo-error p{color:#ffb3b3;font-size:13px;line-height:1.7;margin:0 0 6px;max-width:none}
+    .demo-error small{color:#8f96ab;font-size:12px;line-height:1.6;display:block}
+    .demo-note{padding:14px 24px;border-top:1px solid rgba(155,92,255,.18);font:10px var(--mono);color:#8f96ab;letter-spacing:.5px;line-height:1.7}
+    @media (max-width:820px){
+      .demo-body{grid-template-columns:1fr}
+      .demo-video-wrap{border-right:none;border-bottom:1px solid rgba(155,92,255,.18)}
+      .feature-grid{grid-template-columns:1fr}
+      .detail-main{padding:120px 18px 60px}
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav detail-nav">
+    <a href="index.html" class="brand">PRIYANSHU<span>//</span>DEV</a>
+    <a href="index.html#projects" class="back-link">&larr; BACK TO PROJECTS</a>
+  </nav>
+
+  <main class="detail-main">
+    <header class="detail-head">
+      <p class="card-tag">PROJECT_01 // FEATURED // LIVE DEMO</p>
+      <h1>EDUGUARD AI - EXAM PROCTORING &amp; SUSPICIOUS BEHAVIOUR DETECTION</h1>
+      <p class="lede">An AI-assisted proctoring prototype. A trained Random Forest scores exam sessions from gaze, audio and tab-switch telemetry, and a conservative evidence layer keeps false accusations low. Try the live browser version below - it runs entirely on your device.</p>
+      <div class="chips"><span>Python</span><span>Pandas</span><span>NumPy</span><span>Scikit-learn</span><span>MediaPipe</span><span>Feature Engineering</span><span>Precision-Recall</span></div>
+    </header>
+
+    <section class="detail-section">
+      <h2>LIVE <span>DEMO</span></h2>
+      <div class="demo-shell">
+        <div class="demo-consent">
+          <p><b>Before you start:</b> this demo asks for your camera and microphone so it can estimate gaze direction, audio level and tab switches - the same signals as the desktop app.</p>
+          <p><b>Everything runs locally in your browser.</b> No video, audio or data is recorded, stored or uploaded anywhere. Closing or stopping the demo releases your camera and mic.</p>
+          <p><b>It is a decision-support demo, not proof of cheating.</b> A glance away or a loud room does not mean anyone cheated.</p>
+        </div>
+        <div class="demo-controls">
+          <button class="btn primary" id="startBtn" type="button">START TESTING <span>&#9654;</span></button>
+          <button class="btn ghost" id="stopBtn" type="button" style="display:none">STOP <span>&#9632;</span></button>
+          <span id="demoStatus">IDLE // WAITING FOR PERMISSION</span>
+        </div>
+        <div class="demo-body" id="demoBody">
+          <div class="demo-video-wrap">
+            <video id="demoVideo" autoplay playsinline muted></video>
+            <div class="demo-face-tag" id="faceTag">FACE: -</div>
+          </div>
+          <div class="demo-panel">
+            <div class="risk-row"><span id="riskLabel">NORMAL</span><span id="riskPct">0%</span></div>
+            <div class="risk-bar"><div id="riskFill"></div></div>
+            <div class="metric-grid">
+              <div class="metric"><small>GAZE DEVIATION</small><b id="mGaze">0.0&deg;</b></div>
+              <div class="metric"><small>AUDIO LEVEL</small><b id="mAudio">0.0 dB</b></div>
+              <div class="metric"><small>TAB SWITCHES</small><b id="mTabs">0</b></div>
+              <div class="metric"><small>SESSION TIME</small><b id="mTime">0s</b></div>
+            </div>
+            <div id="evidenceLog"></div>
+          </div>
+        </div>
+        <div class="demo-error" id="demoError">
+          <p id="demoErrorTitle">Could not start the demo.</p>
+          <small id="demoErrorDetail"></small>
+        </div>
+        <div class="demo-note">BROWSER VERSION // runs the behavioral-evidence layer of the Python app in your browser. The trained Random Forest model runs in the desktop version. Tab switches are detected from page visibility and focus events. First load downloads the ~4 MB face model once.</div>
+      </div>
+    </section>
+
+    <section class="detail-section">
+      <h2>ABOUT THE <span>PROJECT</span></h2>
+      <p><b>Problem:</b> online exams need to catch real cheating without wrongly accusing honest students. A sneeze or a quick glance away should never flag anyone.</p>
+      <p><b>What I built:</b> a time-series classification pipeline in Python. It aligns asynchronous video and system telemetry with timestamp-based nearest matching, handles missing data, engineers rolling-window features, then outputs a cheating probability for each session and applies a tuned 90% decision threshold.</p>
+      <p><b>Result:</b> on the held-out test split, the tuned threshold reached 99.5% precision with only 2 false positives out of 2,000 test observations - evaluated with precision-recall curves specifically so honest students stay protected.</p>
+      <p>The live desktop app combines that trained model with sustained behavioral evidence (gaze deviation, elevated audio, tab switches) into one explainable risk score on a monitoring dashboard, with evidence messages saying exactly why risk increased.</p>
+    </section>
+
+    <section class="detail-section">
+      <h2>KEY <span>FEATURES</span></h2>
+      <div class="feature-grid">
+        <div class="feature-card"><h3>TEMPORAL ALIGNMENT</h3><p>Video telemetry (every second) and system events (only when they happen) are merged with pandas merge_asof, the right tool for asynchronous logs.</p></div>
+        <div class="feature-card"><h3>ROLLING-WINDOW FEATURES</h3><p>10-second rolling averages separate sustained anomalies from one-second noise like a sneeze or a quick glance.</p></div>
+        <div class="feature-card"><h3>IMBALANCE-AWARE TRAINING</h3><p>Class-balanced Random Forest: with ~98% innocent data, a naive model scores high accuracy while flagging no one.</p></div>
+        <div class="feature-card"><h3>TUNED 90% THRESHOLD</h3><p>The decision boundary is shifted from the default 50% to 90% probability, cutting false accusations to 2 in 2,000 test observations.</p></div>
+        <div class="feature-card"><h3>EXPLAINABLE RISK SCORE</h3><p>The dashboard shows why risk increased - sustained gaze deviation, sustained audio or tab switches - not just a number.</p></div>
+        <div class="feature-card"><h3>LIVE MONITORING</h3><p>Webcam gaze proxy, microphone level and tab-switch detection feed the model in real time in the desktop app.</p></div>
+      </div>
+    </section>
+
+    <section class="detail-section">
+      <h2>TECH <span>STACK</span></h2>
+      <div class="chips"><span>Python</span><span>Pandas</span><span>NumPy</span><span>Scikit-learn</span><span>MediaPipe</span><span>OpenCV</span><span>Jupyter</span></div>
+    </section>
+
+    <section class="detail-section">
+      <h2>HONEST <span>LIMITS</span></h2>
+      <p>The webcam signal is a gaze/head-angle proxy, not clinical eye tracking. The microphone value is a relative level, not physical dB SPL. The model was trained on engineered telemetry, and it does not detect phones, notes, hands or gestures. EduGuard is an assistive monitoring prototype: real use needs student consent, human review of flagged sessions and an appeal process.</p>
+    </section>
+
+    <div class="detail-actions">
+      <a href="https://github.com/priynkp/EduGuard-AI" target="_blank" rel="noopener noreferrer" class="btn primary">SEE ON GITHUB <span>&#8599;</span></a>
+      <a href="index.html#projects" class="btn ghost">&larr; BACK TO PROJECTS</a>
+    </div>
+  </main>
+
+  <script type="module">
+    import { FaceLandmarker, FilesetResolver } from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14/vision_bundle.mjs";
+
+    // Same thresholds as live_eduguard.py
+    const GAZE_SUSPICIOUS_DEG = 18.0;
+    const GAZE_HIGH_DEG = 28.0;
+    const AUDIO_SUSPICIOUS_DB = 55.0;
+    const AUDIO_HIGH_DB = 68.0;
+    const SUSTAINED_SAMPLES = 8;
+    const WINDOW = 10;
+
+    const startBtn = document.getElementById("startBtn");
+    const stopBtn = document.getElementById("stopBtn");
+    const statusEl = document.getElementById("demoStatus");
+    const demoBody = document.getElementById("demoBody");
+    const errorBox = document.getElementById("demoError");
+    const errorTitle = document.getElementById("demoErrorTitle");
+    const errorDetail = document.getElementById("demoErrorDetail");
+    const video = document.getElementById("demoVideo");
+    const faceTag = document.getElementById("faceTag");
+    const riskLabel = document.getElementById("riskLabel");
+    const riskPct = document.getElementById("riskPct");
+    const riskFill = document.getElementById("riskFill");
+    const mGaze = document.getElementById("mGaze");
+    const mAudio = document.getElementById("mAudio");
+    const mTabs = document.getElementById("mTabs");
+    const mTime = document.getElementById("mTime");
+    const evidenceLog = document.getElementById("evidenceLog");
+
+    let stream = null, landmarker = null, audioCtx = null, analyser = null, audioBuf = null;
+    let timer = null, running = false, tabSwitches = 0, startedAt = 0;
+    let gazeHist = [], audioHist = [], lastEvidenceKey = "";
+
+    function setStatus(t) { statusEl.textContent = t; }
+
+    function showError(title, detail) {
+      errorTitle.textContent = title;
+      errorDetail.textContent = detail;
+      errorBox.classList.add("show");
+    }
+
+    function onVisibilityChange() {
+      if (running && document.hidden) { tabSwitches++; }
+    }
+    function onBlur() { if (running) { tabSwitches++; } }
+
+    function estimateGazeAngle(lm) {
+      // Port of live_eduguard.py: iris position relative to eye corners.
+      if (!lm || lm.length < 478) return null;
+      const avg = (idxs) => {
+        let x = 0, y = 0;
+        for (const i of idxs) { x += lm[i].x; y += lm[i].y; }
+        return { x: x / idxs.length, y: y / idxs.length };
+      };
+      const range = (a, b) => { const r = []; for (let i = a; i <= b; i++) r.push(i); return r; };
+      const leftIris = avg(range(468, 472));
+      const rightIris = avg(range(473, 477));
+      const ratio = (iris, a, b) => {
+        const dx = lm[b].x - lm[a].x, dy = lm[b].y - lm[a].y;
+        const denom = Math.max(Math.hypot(dx, dy), 1e-6);
+        return ((iris.x - lm[a].x) * dx + (iris.y - lm[a].y) * dy) / (denom * denom);
+      };
+      const l = ratio(leftIris, 33, 133);   // left outer -> inner
+      const r = ratio(rightIris, 362, 263); // right inner -> outer
+      const mean = (l + r) / 2;
+      return Math.min(Math.max(Math.abs((mean - 0.5) * 80.0), 0), 45);
+    }
+
+    function readAudioDb() {
+      if (!analyser) return 0;
+      analyser.getFloatTimeDomainData(audioBuf);
+      let sum = 0;
+      for (let i = 0; i < audioBuf.length; i++) sum += audioBuf[i] * audioBuf[i];
+      const rms = Math.sqrt(sum / audioBuf.length);
+      const db = 20.0 * Math.log10(Math.max(rms, 1e-7)) + 120.0;
+      return Math.min(Math.max(db, 17.0), 88.0);
+    }
+
+    function behaviorScore() {
+      // Port of calculate_behavior_score() from live_eduguard.py
+      const evidence = [];
+      const avg = (a) => a.length ? a.reduce((x, y) => x + y, 0) / a.length : 0;
+      const gazeAvg = avg(gazeHist), audioAvg = avg(audioHist);
+      const sustained = (vals, th) =>
+        vals.length >= SUSTAINED_SAMPLES &&
+        vals.slice(-SUSTAINED_SAMPLES).filter(v => v >= th).length >= SUSTAINED_SAMPLES * 0.75;
+
+      const gazeSust = sustained(gazeHist, GAZE_SUSPICIOUS_DEG);
+      const gazeHigh = gazeAvg >= GAZE_HIGH_DEG || sustained(gazeHist, GAZE_HIGH_DEG);
+      let gazeScore = 0;
+      if (gazeHigh) { gazeScore = 1.0; evidence.push(["hi", "HIGH: prolonged gaze deviation"]); }
+      else if (gazeSust) { gazeScore = 0.65; evidence.push(["warn", "WARN: prolonged gaze deviation"]); }
+      else if (gazeAvg >= GAZE_SUSPICIOUS_DEG) { gazeScore = 0.35; evidence.push(["info", "INFO: gaze deviation"]); }
+
+      const audioSust = sustained(audioHist, AUDIO_SUSPICIOUS_DB);
+      const audioHigh = audioAvg >= AUDIO_HIGH_DB || sustained(audioHist, AUDIO_HIGH_DB);
+      let audioScore = 0;
+      if (audioHigh) { audioScore = 1.0; evidence.push(["hi", "HIGH: sustained abnormal audio"]); }
+      else if (audioSust) { audioScore = 0.55; evidence.push(["warn", "WARN: sustained abnormal audio"]); }
+      else if (audioAvg >= AUDIO_SUSPICIOUS_DB) { audioScore = 0.25; evidence.push(["info", "INFO: elevated audio"]); }
+
+      const tabScore = tabSwitches > 0 ? Math.min(1, tabSwitches / 2.0) : 0;
+      if (tabSwitches > 0) evidence.push(["warn", `WARN: ${tabSwitches} tab switch${tabSwitches === 1 ? "" : "es"}`]);
+
+      let score = 0.40 * gazeScore + 0.20 * audioScore + 0.40 * tabScore;
+      const active = [gazeScore, audioScore, tabScore].filter(x => x > 0).length;
+      if (active >= 2) score += 0.10;
+      if (active >= 3) score += 0.10;
+      return [Math.min(Math.max(score, 0), 1), evidence];
+    }
+
+    function labelFor(score) {
+      if (score >= 0.90) return ["HIGH RISK", "#ff7b7b"];
+      if (score >= 0.65) return ["SUSPICIOUS", "#ffd479"];
+      if (score >= 0.35) return ["WATCH", "#c59cff"];
+      return ["NORMAL", "#42e8ff"];
+    }
+
+    function tick() {
+      let gaze = null, faceFound = false;
+      if (landmarker && video.readyState >= 2) {
+        try {
+          const res = landmarker.detectForVideo(video, performance.now());
+          if (res.faceLandmarks && res.faceLandmarks.length > 0) {
+            faceFound = true;
+            gaze = estimateGazeAngle(res.faceLandmarks[0]);
+          }
+        } catch (e) { /* a dropped frame is fine */ }
+      }
+      faceTag.textContent = faceFound ? "FACE: TRACKING" : "FACE: NOT FOUND";
+      faceTag.style.color = faceFound ? "var(--cyan)" : "#ffd479";
+      // Same as the Python app: no face -> neutral 0, never an accusation.
+      if (gaze === null) gaze = 0.0;
+
+      const audioDb = readAudioDb();
+      gazeHist.push(gaze); if (gazeHist.length > WINDOW) gazeHist.shift();
+      audioHist.push(audioDb); if (audioHist.length > WINDOW) audioHist.shift();
+
+      const [score, evidence] = behaviorScore();
+      const [label, color] = labelFor(score);
+      riskLabel.textContent = label;
+      riskLabel.style.color = color;
+      riskPct.textContent = Math.round(score * 100) + "%";
+      riskFill.style.width = (score * 100) + "%";
+      mGaze.textContent = gaze.toFixed(1) + "°";
+      mAudio.textContent = audioDb.toFixed(1) + " dB";
+      mTabs.textContent = String(tabSwitches);
+      mTime.textContent = Math.round((Date.now() - startedAt) / 1000) + "s";
+
+      const key = evidence.map(e => e[1]).join("|");
+      if (key !== lastEvidenceKey) {
+        lastEvidenceKey = key;
+        evidenceLog.innerHTML = evidence.length
+          ? evidence.map(([cls, msg]) => `<p class="${cls}">&gt; ${msg}</p>`).join("")
+          : '<p class="info">&gt; no anomalies detected</p>';
+      }
+    }
+
+    async function startDemo() {
+      errorBox.classList.remove("show");
+      startBtn.disabled = true;
+      setStatus("REQUESTING CAMERA + MIC PERMISSION...");
+
+      try {
+        stream = await navigator.mediaDevices.getUserMedia({
+          video: { width: { ideal: 1280 }, height: { ideal: 720 } },
+          audio: true
+        });
+      } catch (e) {
+        startBtn.disabled = false;
+        setStatus("IDLE // WAITING FOR PERMISSION");
+        if (e && e.name === "NotAllowedError") {
+          showError("Camera or microphone permission was denied.",
+            "The demo cannot run without it. Click the camera/lock icon in your browser's address bar, allow camera and microphone for this site, then press START TESTING again. Nothing ran and nothing was captured.");
+        } else if (e && (e.name === "NotFoundError" || e.name === "OverconstrainedError")) {
+          showError("No camera or microphone was found on this device.",
+            "The demo needs a webcam and a microphone. The project code and README are on GitHub if you want to review it without the live demo.");
+        } else {
+          showError("Could not access your camera or microphone.",
+            (e && e.message ? e.message : "Unknown error") + " - check that no other app is using the camera, then try again.");
+        }
+        return;
+      }
+
+      setStatus("LOADING FACE MODEL (first load downloads ~4 MB)...");
+      try {
+        if (!landmarker) {
+          const fileset = await FilesetResolver.forVisionTasks(
+            "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14/wasm"
+          );
+          landmarker = await FaceLandmarker.createFromOptions(fileset, {
+            baseOptions: {
+              modelAssetPath: "https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/1/face_landmarker.task"
+            },
+            runningMode: "VIDEO",
+            numFaces: 1
+          });
+        }
+      } catch (e) {
+        stopDemo();
+        showError("The face-tracking model could not be loaded.",
+          "This demo needs an internet connection the first time it loads the MediaPipe face model. Check your connection and press START TESTING again.");
+        return;
+      }
+
+      video.srcObject = stream;
+      try { await video.play(); } catch (e) { /* autoplay is best-effort */ }
+
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      const src = audioCtx.createMediaStreamSource(stream);
+      analyser = audioCtx.createAnalyser();
+      analyser.fftSize = 2048;
+      src.connect(analyser);
+      audioBuf = new Float32Array(analyser.fftSize);
+
+      tabSwitches = 0; gazeHist = []; audioHist = []; lastEvidenceKey = null;
+      startedAt = Date.now();
+      running = true;
+      document.addEventListener("visibilitychange", onVisibilityChange);
+      window.addEventListener("blur", onBlur);
+
+      demoBody.classList.add("running");
+      stopBtn.style.display = "inline-block";
+      startBtn.style.display = "none";
+      setStatus("RUNNING // LOCAL ONLY - NOTHING IS RECORDED OR UPLOADED");
+      timer = setInterval(tick, 200);
+      tick();
+    }
+
+    function stopDemo() {
+      running = false;
+      if (timer) { clearInterval(timer); timer = null; }
+      document.removeEventListener("visibilitychange", onVisibilityChange);
+      window.removeEventListener("blur", onBlur);
+      if (stream) { stream.getTracks().forEach(t => t.stop()); stream = null; }
+      if (audioCtx) { audioCtx.close().catch(() => {}); audioCtx = null; analyser = null; }
+      video.srcObject = null;
+      demoBody.classList.remove("running");
+      stopBtn.style.display = "none";
+      startBtn.style.display = "inline-block";
+      startBtn.disabled = false;
+      setStatus("STOPPED // CAMERA + MIC RELEASED");
+    }
+
+    startBtn.addEventListener("click", startDemo);
+    stopBtn.addEventListener("click", stopDemo);
+    window.addEventListener("pagehide", () => { if (running) stopDemo(); });
+  </script>
+</body>
+</html>
