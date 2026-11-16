@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Honda Business Management Dashboard | Priyanshu Kumari Paswan</title>
+
+  <meta
+    name="description"
+    content="Honda Business Management Dashboard: a Python desktop app with login, 1,500 business records, real-time search, Excel persistence and pandas analytics. Built by Priyanshu Kumari Paswan."
+  />
+
+  <meta name="robots" content="index, follow" />
+
+  <meta property="og:title" content="Honda Business Management Dashboard | Priyanshu Kumari Paswan" />
+  <meta property="og:description" content="Python desktop app: 1,500 records, real-time search, Excel persistence and pandas analytics with charts." />
+  <meta property="og:type" content="website" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%2305070d'/%3E%3Ctext x='32' y='43' font-family='monospace' font-size='30' font-weight='700' text-anchor='middle' fill='%2342e8ff'%3EPK%3C/text%3E%3C/svg%3E" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800&family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="style(5).css" />
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GPRWLTDX1R"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-GPRWLTDX1R');
+</script>
+  <style>
+    body{background:var(--bg)}
+    .detail-nav{display:flex;justify-content:space-between;align-items:center;gap:16px}
+    .back-link{font:700 10px var(--mono);letter-spacing:1.5px;color:var(--cyan);text-decoration:none;border:1px solid rgba(66,232,255,.5);padding:12px 16px;transition:.25s;white-space:nowrap}
+    .back-link:hover{box-shadow:0 0 25px rgba(66,232,255,.25);transform:translateY(-2px);color:#fff}
+    .detail-main{max-width:1100px;margin:0 auto;padding:140px 24px 80px}
+    .detail-head{margin-bottom:36px}
+    .detail-head .card-tag{font:10px var(--mono);color:var(--cyan);letter-spacing:1.5px;margin:0 0 14px}
+    .detail-head h1{font:700 clamp(26px,4vw,44px)/1.15 var(--display);margin:0 0 18px;color:var(--text)}
+    .detail-head .lede{color:var(--muted);line-height:1.8;font-size:15px;max-width:760px;margin:0 0 22px}
+    .video-shell{border:1px solid rgba(155,92,255,.3);background:#070a13;position:relative;margin:34px 0 46px}
+    .video-shell:after{content:"";position:absolute;right:0;top:0;width:34px;height:34px;border-top:1px solid var(--cyan);border-right:1px solid var(--cyan);opacity:.6;pointer-events:none}
+    .video-shell video{display:block;width:100%;height:auto;background:#000}
+    .video-caption{font:10px var(--mono);color:#8f96ab;letter-spacing:1px;padding:14px 18px;border-top:1px solid rgba(155,92,255,.18)}
+    .detail-section{margin:46px 0}
+    .detail-section h2{font:700 clamp(18px,2.4vw,26px)/1.2 var(--display);color:var(--text);margin:0 0 20px}
+    .detail-section h2 span{color:var(--purple2)}
+    .detail-section p{color:#aeb2c2;line-height:1.8;font-size:14px;max-width:820px}
+    .detail-section p b{color:#e5e2ef}
+    .feature-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:15px;margin-top:8px}
+    .feature-card{background:linear-gradient(145deg,rgba(15,19,32,.88),rgba(8,11,20,.76));border:1px solid rgba(155,92,255,.18);padding:24px;position:relative}
+    .feature-card:after{content:"";position:absolute;right:0;top:0;width:34px;height:34px;border-top:1px solid var(--cyan);border-right:1px solid var(--cyan);opacity:.6}
+    .feature-card h3{font:700 13px var(--display);letter-spacing:1px;margin:0 0 12px;color:#e5e2ef}
+    .feature-card p{color:#aeb2c2;line-height:1.7;font-size:13px;margin:0;max-width:none}
+    .shot-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+    .shot{border:1px solid rgba(155,92,255,.18);background:#070a13;padding:10px}
+    .shot img{display:block;width:100%;height:auto}
+    .shot figcaption{font:10px var(--mono);color:#8f96ab;letter-spacing:1px;padding:12px 6px 4px}
+    .detail-actions{display:flex;gap:12px;flex-wrap:wrap;margin:40px 0 10px}
+    .detail-actions .btn{text-decoration:none;display:inline-block}
+    @media (max-width:720px){
+      .feature-grid,.shot-grid{grid-template-columns:1fr}
+      .detail-main{padding:120px 18px 60px}
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav detail-nav">
+    <a href="index.html" class="brand">PRIYANSHU<span>//</span>DEV</a>
+    <a href="index.html#projects" class="back-link">&larr; BACK TO PROJECTS</a>
+  </nav>
+
+  <main class="detail-main">
+    <header class="detail-head">
+      <p class="card-tag">PROJECT_03 // DESKTOP APP // WALKTHROUGH</p>
+      <h1>HONDA BUSINESS MANAGEMENT DASHBOARD</h1>
+      <p class="lede">A desktop app that puts a car business's rentals, repairs and sales in one place: log in, search 1,500 records in real time, add new entries that save straight to a local Excel workbook, and open an analytics view with KPIs, charts and one-click CSV exports.</p>
+      <div class="chips"><span>Python</span><span>Tkinter</span><span>Pandas</span><span>Matplotlib</span><span>openpyxl</span><span>Excel</span></div>
+    </header>
+
+    <div class="video-shell">
+      <video controls muted preload="metadata" poster="assets/honda-analytics.png">
+        <source src="assets/honda-dashboard-walkthrough.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+      <div class="video-caption">65-SECOND WALKTHROUGH // LOGIN &rarr; RECORDS &rarr; LIVE SEARCH &rarr; ADD A RECORD &rarr; ANALYTICS</div>
+    </div>
+
+    <section class="detail-section">
+      <h2>ABOUT THE <span>PROJECT</span></h2>
+      <p><b>Problem:</b> a car business tracked rentals, repairs and sales by hand in separate spreadsheets, so simple questions like "which model sells the most?" took manual digging.</p>
+      <p><b>What I built:</b> a Tkinter desktop application with a login screen and four workspaces: Rentals, Repairs, Sales and Analytics. Every record tab supports real-time search across every field, and new records typed into the app are validated and saved directly to a local Excel workbook through openpyxl, so the data survives restarts.</p>
+      <p><b>Analytics:</b> the analytics view runs on pandas. It shows KPI cards (record counts and totals per business line, average repair cost), Matplotlib charts for monthly sales value, monthly service amounts, sales value by car model and the transaction mix, plus report tables for sales by model, top customers and repair-cost breakdown. A year filter recalculates everything, and one button exports all five analysis tables as CSVs.</p>
+      <p>The app ships with a generated sample dataset of 1,500 records (600 rentals, 600 repairs, 300 sales) so every view and chart works out of the box.</p>
+    </section>
+
+    <section class="detail-section">
+      <h2>KEY <span>FEATURES</span></h2>
+      <div class="feature-grid">
+        <div class="feature-card"><h3>1,500 RECORDS, ONE APP</h3><p>Rentals, repairs and sales managed in separate tabs of a single window, loaded from local Excel workbooks.</p></div>
+        <div class="feature-card"><h3>REAL-TIME SEARCH</h3><p>Typing in the search box filters every field of every record tab instantly, with a live match count.</p></div>
+        <div class="feature-card"><h3>LOCAL EXCEL PERSISTENCE</h3><p>New records are validated and appended to the Excel workbook on save, so data persists between sessions with no database server.</p></div>
+        <div class="feature-card"><h3>PANDAS ANALYTICS</h3><p>KPI cards, monthly trend charts, sales by model, top customers and repair breakdown, all recalculated by a year filter.</p></div>
+        <div class="feature-card"><h3>CSV EXPORT</h3><p>One click writes all five analysis tables to CSV files for sharing or further work in Excel.</p></div>
+        <div class="feature-card"><h3>LOGIN SCREEN</h3><p>A simple credential gate keeps the business data behind a login before the dashboard opens.</p></div>
+      </div>
+    </section>
+
+    <section class="detail-section">
+      <h2>TECH <span>STACK</span></h2>
+      <div class="chips"><span>Python</span><span>Tkinter</span><span>Pandas</span><span>Matplotlib</span><span>openpyxl</span><span>Excel</span></div>
+    </section>
+
+    <section class="detail-section">
+      <h2>IN <span>ACTION</span></h2>
+      <div class="shot-grid">
+        <figure class="shot"><img src="assets/honda-records.png" alt="Rentals tab of the Honda dashboard: search bar, add-a-record form and a table of rental records" /><figcaption>RECORDS // ADD, SEARCH AND BROWSE 600 RENTALS</figcaption></figure>
+        <figure class="shot"><img src="assets/honda-analytics.png" alt="Analytics tab of the Honda dashboard: KPI cards, monthly charts and a sales-by-model table" /><figcaption>ANALYTICS // KPI CARDS, CHARTS AND REPORT TABLES</figcaption></figure>
+      </div>
+    </section>
+
+    <div class="detail-actions">
+      <a href="https://github.com/priynkp" target="_blank" rel="noopener noreferrer" class="btn primary">SEE ON GITHUB <span>&#8599;</span></a>
+      <a href="index.html#projects" class="btn ghost">&larr; BACK TO PROJECTS</a>
+    </div>
+  </main>
+</body>
+</html>
