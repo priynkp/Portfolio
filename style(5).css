@@ -99,3 +99,7 @@ footer{display:flex;justify-content:space-between;padding:22px 6vw;border-top:1p
 /* RESUME button styled like HIRE ME (her ask, Nov 26) */
 .hero-actions .hire-depth{align-self:center;cursor:pointer;padding:18px 30px}
 .hero-actions .hire-depth span{margin-left:10px}
+/* RESUME button hover/press effect, same as freelance platform icons (her ask, Nov 26) */
+.hero-actions .hire-depth{transition:.25s}
+.hero-actions .hire-depth:hover,.hero-actions .hire-depth:focus-visible{animation:none;color:var(--cyan);border-color:var(--cyan);box-shadow:0 0 18px rgba(66,232,255,.15);transform:translateY(-2px)}
+.hero-actions .hire-depth:active{transform:translateY(0) scale(.97)}
